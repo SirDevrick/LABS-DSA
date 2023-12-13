@@ -3,31 +3,35 @@
 
 struct node {
   int data;
-  struct node* next;
+  struct node *next;
 };
 
-struct node* BuildOneTwoThree() {
-  struct node* head = NULL;
-  struct node* second = NULL;
-  struct node* third = NULL;
+struct node *BuildOneTwoThree() {
+  struct node *head = malloc(sizeof(struct node));
+  /* struct node *second = NULL; */
+  /* struct node *third = NULL; */
 
-  head = malloc(sizeof(struct node));
-  second = malloc(sizeof(struct node));
-  third = malloc(sizeof(struct node));
+  head->next = (head->data = 1, malloc(sizeof(struct node)));
+  head->next->next = (head->next->data = 2, malloc(sizeof(struct node)));
+  head->next->next->next = (head->next->next->data = 3, NULL);
 
-  head->data = 1;
-  head->next = second;
+  /* head = malloc(sizeof(struct node)); */
+  /* second = malloc(sizeof(struct node)); */
+  /* third = malloc(sizeof(struct node)); */
 
-  second->data = 2;
-  second->next = third;
+  /* head->data = 1; */
+  /* head->next = second; */
 
-  third->data = 3;
-  third->next = NULL;
+  /* second->data = 2; */
+  /* second->next = third; */
+
+  /* third->data = 3; */
+  /* third->next = NULL; */
 
   return head;
 }
 
-void printList(struct node* head) {
+void printList(struct node *head) {
   while (head != NULL) {
     printf("%d ", head->data);
     head = head->next;
@@ -35,7 +39,20 @@ void printList(struct node* head) {
   printf("\n");
 }
 
+int lenghtList(struct node *head) {
+  struct node *current = head;
+  int count = 0;
+  while (current != NULL) {
+    count++;
+    current = current->next;
+  }
+  return count;
+}
+
 int main() {
-  printList(BuildOneTwoThree());
+  struct node *list = BuildOneTwoThree();
+  int len = lenghtList(list);
+  printList(list);
+  printf("%d\n", len);
   return 0;
 }
