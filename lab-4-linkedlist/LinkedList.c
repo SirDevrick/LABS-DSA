@@ -49,10 +49,18 @@ int lenghtList(struct node *head) {
   return count;
 }
 
-int main() {
+void lenghtTest() {
+  
   struct node *list = BuildOneTwoThree();
   int len = lenghtList(list);
-  printList(list);
   printf("%d\n", len);
+}
+
+
+
+int main() {
+  lenghtTest();
+  /* printList(list); */
+  /* printf("%d\n", len); */
   return 0;
 }
