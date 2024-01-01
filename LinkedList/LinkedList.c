@@ -120,7 +120,9 @@ void tailTest () {
   /* Push(&head, 4); */
   /* Push(&(tail->next), 5); */
   for (int i = 2; i < 5; ++i) {
-    Push(&(tail->next), i);
+    // Hacert con la aritemitca de punteros es lo mismo que hacerlo con flechita
+    Push(&((*tail).next), i);
+    /* Push(&(tail->next), i); */
     tail = tail->next;
   }
   printList(head);
