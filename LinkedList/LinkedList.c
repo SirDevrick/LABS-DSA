@@ -32,10 +32,10 @@ struct node *BuildOneTwoThree() {
   return head;
 }
 
-void printList(struct node *head) {
-  while (head != NULL) {
-    printf("%d ", head->data);
-    head = head->next;
+void printList(struct node *headRef) {
+  while (headRef != NULL) {
+    printf("%d -> ", headRef->data);
+    headRef = headRef->next;
   }
   printf("\n");
 }
@@ -106,8 +106,29 @@ void deleteListTest() {
   printList(myList);
 }
 
+void tailTest () {
+  struct node* head = NULL;
+  struct node* tail;
+  int i;
+  Push(&head, 1);
+  tail = head;
+  /* Push(&head, 2); */
+  /* printList(head); */
+  // Esto es lo mismo que hacerlo con la flechita
+  /* Push(&((*tail).next), 3); */
+  /* tail = tail->next; */
+  /* Push(&head, 4); */
+  /* Push(&(tail->next), 5); */
+  for (int i = 2; i < 5; ++i) {
+    Push(&(tail->next), i);
+    tail = tail->next;
+  }
+  printList(head);
+}
+
 int main() {
   /* lenghtTest(); */
-  deleteListTest();
+  /* deleteListTest(); */
+  tailTest();
   return 0;
 }
