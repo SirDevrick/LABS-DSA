@@ -40,6 +40,14 @@ void printList(struct node *head) {
   printf("\n");
 }
 
+void Push(struct node **headRef, int data) {
+  struct node *newNode = malloc(sizeof(struct node));
+  newNode->data = data;
+
+  newNode->next = *headRef;
+  *headRef = newNode;
+}
+
 int lenghtList(struct node *head) {
   /* struct node *current = head; */
   int count = 0;
@@ -61,6 +69,24 @@ int countOcurrency(struct node *current, int data) {
   return count;
 }
 
+void deleteList(struct node **headRef) {
+  // Esto esta mal
+  struct node *tmp = NULL;
+  while (*headRef) {
+    tmp = *headRef;
+    *headRef = (*headRef)->next;
+    free(tmp);
+  }
+  *headRef = NULL;
+}
+
+void insertNth() {}
+
+void insertNth_Test() {
+  struct node *head = NULL;
+
+}
+
 void lenghtTest() {
   struct node *list = BuildOneTwoThree();
   int len = lenghtList(list);
@@ -68,13 +94,20 @@ void lenghtTest() {
 }
 
 void countTest() {
-  struct node* myList = BuildOneTwoThree();
+  struct node *myList = BuildOneTwoThree();
   int count = countOcurrency(myList, 2);
+  printf("%d", count);
 }
 
-
+void deleteListTest() {
+  struct node *myList = BuildOneTwoThree();
+  printList(myList);
+  deleteList(&myList);
+  printList(myList);
+}
 
 int main() {
-  lenghtTest();
+  /* lenghtTest(); */
+  deleteListTest();
   return 0;
 }
