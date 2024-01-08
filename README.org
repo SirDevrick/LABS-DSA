@@ -1,0 +1,9 @@
+#+title: Data structures and Algorithms
+
+
+* AED
+Estos son ejercicios resueltos en el curso de DSA, con material de Nick Parlante profesor de Stanford
+* Bibliografia
+*** Nick Parlante
+Accede al materia
++ [[http://cslibrary.stanford.edu/][Aqui]]
