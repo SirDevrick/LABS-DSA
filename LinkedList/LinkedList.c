@@ -70,14 +70,13 @@ int countOcurrency(struct node *current, int data) {
 }
 
 void deleteList(struct node **headRef) {
-  // Esto esta mal
   struct node *tmp = NULL;
   while (*headRef) {
     tmp = *headRef;
     *headRef = (*headRef)->next;
     free(tmp);
   }
-  *headRef = NULL;
+  /* *headRef = NULL; */
 }
 
 void insertNth() {}
@@ -103,7 +102,8 @@ void deleteListTest() {
   struct node *myList = BuildOneTwoThree();
   printList(myList);
   deleteList(&myList);
-  printList(myList);
+  int len = lenghtList(myList);
+  printf("%d\n", len);
 }
 
 void tailTest () {
@@ -128,9 +128,46 @@ void tailTest () {
   printList(head);
 }
 
+void tailDummyTest () {
+  struct node dummy;
+  // Dummy node is temporarily the first node
+  struct node* tail = &dummy; // Start the tail at the dummy.
+                              // Build the list on dummy.next (aka tail->next)
+  int i;
+  dummy.next = NULL;
+  for (i=2; i<6; i++) {
+    Push(&(tail->next), i);
+    tail = tail->next;
+  }
+  // En este caso me esta imprimiendo el valor de dummy tambien pero es basura
+  printList(&dummy);
+  // The real result list is now in dummy.next
+  // dummy.next == {1, 2, 3, 4, 5};
+}
+
+struct node* reverseList(struct node* head) {
+  if (!head || !(head->next))
+    return head;
+  
+  struct node* reverse = reverseList(head->next);
+  head->next->next = head;
+  head->next = NULL;
+  
+  return reverse;
+}
+
+void reverseListTest() {
+  struct node* head = BuildOneTwoThree();
+  printList(head);
+  head = reverseList(head);
+  printList(head);
+}
+
 int main() {
   /* lenghtTest(); */
   /* deleteListTest(); */
-  tailTest();
+  /* tailTest(); */
+  /* tailDummyTest(); */
+  reverseListTest();
   return 0;
 }

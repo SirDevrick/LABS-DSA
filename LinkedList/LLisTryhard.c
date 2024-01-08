@@ -17,6 +17,14 @@ void Push (struct node** headRef, int data) {
   *headRef = newNode;
 }
 
+void printList(struct node *headRef) {
+  while (headRef != NULL) {
+    printf("%d -> ", headRef->data);
+    headRef = headRef->next;
+  }
+  printf("\n");
+}
+
 int LenghtList (struct node* headRef) {
   int len = 0;
   while (headRef) {
@@ -75,6 +83,33 @@ void DeleteListChad (Node** headRef) {
   }
   *headRef = NULL;
 }
+
+// Aqui deberia ir la funcion POP()
+
+void InsertNth(Node** headRef, int idx, int data) {
+  assert(idx >= 0 && idx <= LenghtList(*headRef));
+  Node* newNode = malloc(sizeof(Node));
+  (*newNode).data = data;
+  // Caso especial no necesito hacer nada, el Push se ecarga de meter el nodo en el frente
+  if (!*headRef || idx == 0)
+    Push(headRef, data);
+  else {
+    for (int i = 0; i < idx-1; i++)
+      *headRef = (*headRef)->next;
+    newNode->next = (*headRef)->next;
+    *headRef = newNode;
+  }
+}
+
+void InsertNthTest() {
+  struct node* head = NULL;
+  InsertNth(&head, 0, 13);
+  InsertNth(&head, 1, 42);
+  InsertNth(&head, 1, 5);// build {13)
+                         // build {13, 42}
+                         // build {13, 5, 42}
+  DeleteListChad(&head);
+} 
 
 void CountTest () {
   struct node* head = NULL;
