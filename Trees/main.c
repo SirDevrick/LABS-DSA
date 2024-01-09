@@ -91,9 +91,7 @@ int hasPathSum(struct node* root, int sum) {
   if (!root)
     return sum == 0;
   sum = sum - root->data;
-  hasPathSum(root->left, sum);
-  hasPathSum(root->right, sum);
-  return sum;
+  return hasPathSum(root->left, sum) || hasPathSum(root->right, sum);
 }
 
 void printArray(int *arr, int len) {
@@ -120,6 +118,19 @@ void printPaths(struct node* node) {
     printPathRecursion(node, a, 0);
 }
 
+void mirror(struct node* node) {
+  if (!node)
+    return;
+  else {
+    struct node* tmp = NULL;
+    mirror(node->left);
+    mirror(node->right);
+    tmp = node->left;
+    node->left = node->right;
+    node->right = tmp;
+  }
+}
+
 void SizeTest() {
   struct node* root = build123();
   int size = Size(root);
@@ -136,9 +147,32 @@ void maxDepthTest() {
   TreePostOrder(root);
 }
 
+void hasPathSumTest(){
+  struct node* root = build123();
+  int result = hasPathSum(root, 6);
+  printf("%d \n", result);
+}
+
+void printPathsTest() {
+  struct node* root = build123();
+  printPaths(root);
+}
+
+void mirrorTest() {
+  struct node* root = build123();
+  printTree(root);
+
+  mirror(root);
+
+  printf("\n");
+  printTree(root);
+}
 
 int main () {
   /* SizeTest(); */
-  maxDepthTest();
+  /* maxDepthTest(); */
+  /* hasPathSumTest(); */
+  /* printPathsTest(); */
+  mirrorTest();
   return 0;
 }
