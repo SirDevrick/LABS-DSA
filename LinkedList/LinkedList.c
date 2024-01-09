@@ -81,10 +81,7 @@ void deleteList(struct node **headRef) {
 
 void insertNth() {}
 
-void insertNth_Test() {
-  struct node *head = NULL;
-
-}
+void insertNth_Test() { struct node *head = NULL; }
 
 void lenghtTest() {
   struct node *list = BuildOneTwoThree();
@@ -106,9 +103,9 @@ void deleteListTest() {
   printf("%d\n", len);
 }
 
-void tailTest () {
-  struct node* head = NULL;
-  struct node* tail;
+void tailTest() {
+  struct node *head = NULL;
+  struct node *tail;
   int i;
   Push(&head, 1);
   tail = head;
@@ -128,14 +125,14 @@ void tailTest () {
   printList(head);
 }
 
-void tailDummyTest () {
+void tailDummyTest() {
   struct node dummy;
   // Dummy node is temporarily the first node
-  struct node* tail = &dummy; // Start the tail at the dummy.
+  struct node *tail = &dummy; // Start the tail at the dummy.
                               // Build the list on dummy.next (aka tail->next)
   int i;
   dummy.next = NULL;
-  for (i=2; i<6; i++) {
+  for (i = 2; i < 6; i++) {
     Push(&(tail->next), i);
     tail = tail->next;
   }
@@ -145,19 +142,19 @@ void tailDummyTest () {
   // dummy.next == {1, 2, 3, 4, 5};
 }
 
-struct node* reverseList(struct node* head) {
+struct node *reverseList(struct node *head) {
   if (!head || !(head->next))
     return head;
-  
-  struct node* reverse = reverseList(head->next);
+
+  struct node *reverse = reverseList(head->next);
   head->next->next = head;
   head->next = NULL;
-  
+
   return reverse;
 }
 
 void reverseListTest() {
-  struct node* head = BuildOneTwoThree();
+  struct node *head = BuildOneTwoThree();
   printList(head);
   head = reverseList(head);
   printList(head);
