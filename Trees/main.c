@@ -131,6 +131,21 @@ void mirror(struct node* node) {
   }
 }
 
+void doubleTree(struct node* node) {
+  struct node* old = NULL;
+  if (!node)
+    return;
+  else {
+    doubleTree(node->left);
+    doubleTree(node->right);
+
+    /* insert(node, node->data); */
+    old = node->left;
+    node->left = newNode(node->data);
+    node->left->left = old;
+  }
+}
+
 void SizeTest() {
   struct node* root = build123();
   int size = Size(root);
@@ -168,11 +183,22 @@ void mirrorTest() {
   printTree(root);
 }
 
+void doubleTreeTest() {
+  struct node* root = build123();
+  printTree(root);
+
+  doubleTree(root);
+
+  printf("\n");
+  printTree(root);
+}
+
 int main () {
   /* SizeTest(); */
   /* maxDepthTest(); */
   /* hasPathSumTest(); */
   /* printPathsTest(); */
-  mirrorTest();
+  /* mirrorTest(); */
+  doubleTreeTest();
   return 0;
 }
