@@ -1,16 +1,16 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
 struct node {
   int data;
-  struct node* next;
+  struct node *next;
 };
 
 typedef struct node Node;
 
-void Push (struct node** headRef, int data) {
-  struct node* newNode = malloc(sizeof(struct node));
+void Push(struct node **headRef, int data) {
+  struct node *newNode = malloc(sizeof(struct node));
   (*newNode).data = data;
 
   (*newNode).next = *headRef;
@@ -25,7 +25,7 @@ void printList(struct node *headRef) {
   printf("\n");
 }
 
-int LenghtList (struct node* headRef) {
+int LenghtList(struct node *headRef) {
   int len = 0;
   while (headRef) {
     len++;
@@ -35,16 +35,17 @@ int LenghtList (struct node* headRef) {
   return len;
 }
 
-int Count (Node** headRef, int data) {
+int Count(Node **headRef, int data) {
   int count = 0;
   while (*headRef) {
-    if (data == (**headRef).data) count++;
+    if (data == (**headRef).data)
+      count++;
     *headRef = (**headRef).next;
   }
   return count;
 }
 
-int GetNth (Node* headRef, int idx) {
+int GetNth(Node *headRef, int idx) {
   assert(idx >= 0 && idx < LenghtList(headRef));
   while (idx != 0) {
     headRef = (*headRef).next;
@@ -53,8 +54,8 @@ int GetNth (Node* headRef, int idx) {
   return (*headRef).data;
 }
 
-void LenghtTest () {
-  struct node* head = NULL;
+void LenghtTest() {
+  struct node *head = NULL;
   Push(&head, 1);
   Push(&head, 2);
   Push(&head, 3);
@@ -63,7 +64,7 @@ void LenghtTest () {
   printf("%d\n", len);
 }
 
-void DeleteListDommie (Node** headRef) {
+void DeleteListDommie(Node **headRef) {
   if (*headRef == NULL)
     return;
   else {
@@ -73,46 +74,54 @@ void DeleteListDommie (Node** headRef) {
   }
 }
 
-void DeleteListChad (Node** headRef) {
-  Node* current = *headRef;
-  Node* aux = *headRef;
+void DeleteListChad(Node **headRef) {
+  Node *current = *headRef;
+  Node *aux = *headRef;
   while (aux != NULL) {
     aux = aux->next;
     free(current);
-    current=aux;
+    current = aux;
   }
   *headRef = NULL;
 }
 
 // Aqui deberia ir la funcion POP()
+int Pop(struct node** headRef) {
+  int poped = (*headRef)->data;
+  struct node* current = (*headRef)->next;
+  free(*headRef);
+  *headRef = current;
+  return poped;
+}
 
-void InsertNth(Node** headRef, int idx, int data) {
+void InsertNth(Node **headRef, int idx, int data) {
   assert(idx >= 0 && idx <= LenghtList(*headRef));
-  Node* newNode = malloc(sizeof(Node));
-  (*newNode).data = data;
-  // Caso especial no necesito hacer nada, el Push se ecarga de meter el nodo en el frente
+  Node *previus = NULL;
+  Node *current = *headRef;
+  // Caso especial no necesito hacer nada, el Push se ecarga de meter el nodo en
+  // el frente
   if (!*headRef || idx == 0)
     Push(headRef, data);
   else {
-    for (int i = 0; i < idx-1; i++)
-      *headRef = (*headRef)->next;
-    newNode->next = (*headRef)->next;
-    *headRef = newNode;
+    for (int i = 0; i < idx - 1; i++) {
+      current = current->next;
+    }
+    Push(&(current->next), data);
   }
 }
 
 void InsertNthTest() {
-  struct node* head = NULL;
+  struct node *head = NULL;
   InsertNth(&head, 0, 13);
   InsertNth(&head, 1, 42);
-  InsertNth(&head, 1, 5);// build {13)
-                         // build {13, 42}
-                         // build {13, 5, 42}
+  InsertNth(&head, 1, 777);
+  InsertNth(&head, 2, 5);
+  printList(head);
   DeleteListChad(&head);
-} 
+}
 
-void CountTest () {
-  struct node* head = NULL;
+void CountTest() {
+  struct node *head = NULL;
   Push(&head, 2);
   Push(&head, 2);
   Push(&head, 2);
@@ -121,8 +130,8 @@ void CountTest () {
   printf("%d\n", len);
 }
 
-void GetNthTest () {
-  struct node* head = NULL;
+void GetNthTest() {
+  struct node *head = NULL;
   Push(&head, 1);
   Push(&head, 2);
   Push(&head, 3);
@@ -131,8 +140,8 @@ void GetNthTest () {
   printf("%d\n", len);
 }
 
-void DeleteTest () {
-  struct node* head = NULL;
+void DeleteTest() {
+  struct node *head = NULL;
   Push(&head, 3);
   Push(&head, 2);
   Push(&head, 5);
@@ -141,8 +150,8 @@ void DeleteTest () {
   printf("%d\n", len);
 }
 
-void DeleteChadTest () {
-  struct node* head = NULL;
+void DeleteChadTest() {
+  struct node *head = NULL;
   Push(&head, 3);
   Push(&head, 2);
   Push(&head, 5);
@@ -151,11 +160,27 @@ void DeleteChadTest () {
   printf("%d\n", len);
 }
 
-int main () {
+void popTest() {
+  struct node *head = NULL;
+  Push(&head, 1);
+  Push(&head, 2);
+  Push(&head, 3);
+
+  printList(head);
+
+  printf("Pop: %d\n", Pop(&head));
+  /* Pop(&head); */
+
+  printList(head);
+}
+
+int main() {
   /* LenghtTest(); */
   /* CountTest(); */
   /* GetNthTest(); */
   /* DeleteTest(); */
-  DeleteChadTest();
+  /* DeleteChadTest(); */
+  /* InsertNthTest(); */
+  popTest();
   return 0;
 }
