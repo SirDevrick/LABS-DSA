@@ -85,7 +85,6 @@ void DeleteListChad(Node **headRef) {
   *headRef = NULL;
 }
 
-// Aqui deberia ir la funcion POP()
 int Pop(struct node** headRef) {
   int poped = (*headRef)->data;
   struct node* current = (*headRef)->next;
@@ -96,7 +95,6 @@ int Pop(struct node** headRef) {
 
 void InsertNth(Node **headRef, int idx, int data) {
   assert(idx >= 0 && idx <= LenghtList(*headRef));
-  Node *previus = NULL;
   Node *current = *headRef;
   // Caso especial no necesito hacer nada, el Push se ecarga de meter el nodo en
   // el frente
@@ -108,6 +106,10 @@ void InsertNth(Node **headRef, int idx, int data) {
     }
     Push(&(current->next), data);
   }
+}
+
+void SortedInsert(struct node** headRef, struct node* newNode) {
+  struct node* current = *headRef;
 }
 
 void InsertNthTest() {
