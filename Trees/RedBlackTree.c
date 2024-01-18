@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define RED 0
+#define BLACK 1
+
 struct node {
   int data;
-  char color;
+  int color;
   struct node *parent;
   struct node *left;
   struct node *right;
