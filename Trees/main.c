@@ -146,6 +146,55 @@ void doubleTree(struct node* node) {
   }
 }
 
+void printLinkedList(struct node* head) {
+  struct node* current = head;
+  do {
+    printf("%d ", current->data);
+    current = current->right;
+  } while (current != head);
+}
+
+struct node* treeToList(struct node* root) {
+  if (!root) return NULL;
+  struct node* leftList = treeToList(root->left);
+  struct node* rightList = treeToList(root->right);
+
+  root->left = root;
+  root->right = root;
+  if (leftList) {
+    leftList->left->right = root;
+    root->left = leftList->left;
+    leftList->left = root;
+  }
+
+  if (rightList) {
+    root->right = rightList;
+    rightList->left->right = root;
+    root->left = rightList->left;
+    rightList->left = root;
+  }
+  return root;
+}
+
+void treeToListTest(){
+  struct node* tree = NULL;
+  tree = insert(tree, 1);
+  tree = insert(tree, 2);
+  tree = insert(tree, 3);
+  tree = insert(tree, 4);
+  tree = insert(tree, 5);
+  tree = insert(tree, 6);
+  tree = insert(tree, 7);
+  /* printTree(tree); */
+  struct node* list = treeToList(tree);
+  printLinkedList(list);
+}
+
+/* void transplant(struct node* node, struct node* u, struct node* v) { */
+/*   if () */
+
+/* } */
+
 void SizeTest() {
   struct node* root = build123();
   int size = Size(root);
@@ -199,6 +248,7 @@ int main () {
   /* hasPathSumTest(); */
   /* printPathsTest(); */
   /* mirrorTest(); */
-  doubleTreeTest();
+  /* doubleTreeTest(); */
+  treeToListTest();
   return 0;
 }
