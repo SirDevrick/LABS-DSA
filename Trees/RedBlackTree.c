@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define RED 0
-#define BLACK 1
+#define RED 1
+#define BLACK 0
 
 struct node {
   int key;
@@ -15,8 +15,17 @@ struct node {
 struct node *createNode(int);
 void insert_RB(struct node **, struct node *);
 void RB_fixup(struct node **, struct node *);
+void print_RBTree(struct node *);
 
-int main() { return 0; }
+int main() {
+  struct node *z = createNode(5);
+  struct node *RB_Tree = NULL;
+  insert_RB(&RB_Tree, z);
+
+  print_RBTree(RB_Tree);
+  printf("\n");
+  return 0;
+}
 
 struct node *createNode(int data) {
   struct node *newNode = malloc(sizeof(struct node));
@@ -53,3 +62,12 @@ void insert_RB(struct node **Tree, struct node *z) {
 }
 
 void RB_fixup(struct node **Tree, struct node *z) { (*Tree)->color = BLACK; }
+
+void print_RBTree(struct node *Tree) {
+  if (!Tree)
+    return;
+
+  print_RBTree(Tree->left);
+  printf("{%d, %d}  ", Tree->key, Tree->color);
+  print_RBTree(Tree->right);
+}
