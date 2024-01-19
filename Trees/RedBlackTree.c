@@ -5,22 +5,36 @@
 #define BLACK 1
 
 struct node {
-  int data;
+  int key;
   int color;
   struct node *parent;
   struct node *left;
   struct node *right;
 };
 
+struct node *createNode(int);
+
+struct node *insert_RB(struct node *, struct node *);
+
+int main() { return 0; }
+
 struct node *createNode(int data) {
   struct node *newNode = malloc(sizeof(struct node));
-  newNode->data = data;
-  newNode->color = RED;
-  newNode->parent = NULL;
-  newNode->left = NULL;
-  newNode->right = NULL;
-
+  newNode->key = data;
   return newNode;
 }
 
-int main() { return 0; }
+struct node *insert_RB(struct node *Tree, struct node *z) {
+  struct node *x_current_root = Tree;
+  struct node *y_current_father = NULL;
+
+  while (x_current_root) {
+    y_current_father = x_current_root;
+    if (z->key < x_current_root->key)
+      x_current_root = x_current_root->left;
+    else
+      x_current_root = x_current_root->right;
+  }
+
+  z->parent = y_current_father;
+}
