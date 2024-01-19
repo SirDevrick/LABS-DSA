@@ -12,4 +12,15 @@ struct node {
   struct node *right;
 };
 
+struct node *createNode(int data) {
+  struct node *newNode = malloc(sizeof(struct node));
+  newNode->data = data;
+  newNode->color = RED;
+  newNode->parent = NULL;
+  newNode->left = NULL;
+  newNode->right = NULL;
+
+  return newNode;
+}
+
 int main() { return 0; }
