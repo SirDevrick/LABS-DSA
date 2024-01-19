@@ -13,8 +13,8 @@ struct node {
 };
 
 struct node *createNode(int);
-struct node *insert_RB(struct node *, struct node *);
-struct node *RB_fixup(struct node *, struct node *);
+void insert_RB(struct node **, struct node *);
+void RB_fixup(struct node **, struct node *);
 
 int main() { return 0; }
 
@@ -24,8 +24,8 @@ struct node *createNode(int data) {
   return newNode;
 }
 
-struct node *insert_RB(struct node *Tree, struct node *z) {
-  struct node *x_current_root = Tree;
+void insert_RB(struct node **Tree, struct node *z) {
+  struct node *x_current_root = *Tree;
   struct node *y_current_father = NULL;
 
   while (x_current_root) {
@@ -39,7 +39,7 @@ struct node *insert_RB(struct node *Tree, struct node *z) {
   z->parent = y_current_father;
 
   if (!y_current_father)
-    Tree = z;
+    *Tree = z;
   else if (z->key < y_current_father->key)
     y_current_father->left = z;
   else
@@ -48,5 +48,8 @@ struct node *insert_RB(struct node *Tree, struct node *z) {
   z->left = NULL;
   z->right = NULL;
   z->color = RED;
-  return RB_fixup(Tree, z);
+
+  RB_fixup(Tree, z);
 }
+
+void RB_fixup(struct node **Tree, struct node *z) { (*Tree)->color = BLACK; }
