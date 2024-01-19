@@ -13,8 +13,8 @@ struct node {
 };
 
 struct node *createNode(int);
-
 struct node *insert_RB(struct node *, struct node *);
+struct node *RB_fixup(struct node *, struct node *);
 
 int main() { return 0; }
 
@@ -37,4 +37,16 @@ struct node *insert_RB(struct node *Tree, struct node *z) {
   }
 
   z->parent = y_current_father;
+
+  if (!y_current_father)
+    Tree = z;
+  else if (z->key < y_current_father->key)
+    y_current_father->left = z;
+  else
+    y_current_father->right = z;
+
+  z->left = NULL;
+  z->right = NULL;
+  z->color = RED;
+  return RB_fixup(Tree, z);
 }
